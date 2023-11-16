@@ -2,7 +2,7 @@ import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
 export async function getTasks(query) {
-  await fakeNetwork(`gettasks:${query}`);
+  await fakeNetwork(`getTasks:${query}`);
   try {
     let tasks = await JSON.parse(localStorage.getItem("tasks")) || [];
     if (query) {

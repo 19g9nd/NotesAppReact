@@ -1,7 +1,0 @@
-input[data-is-valid="true"] {
-    background-color: lightgreen;
-}
-
-input[data-is-valid="false"] {
-    background-color: pink;
-}

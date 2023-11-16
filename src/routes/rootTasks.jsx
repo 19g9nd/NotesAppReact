@@ -71,7 +71,7 @@ function Root() {
                   >
                     {task.title || task.description ? (
                       <>
-                        {task.title} {task.description}
+                        {task.title}
                       </>
                     ) : (
                       <i>No Title</i>
