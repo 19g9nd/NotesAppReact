@@ -1,9 +1,21 @@
-import { Form, useLoaderData } from "react-router-dom";
-import { getTask } from "../tasks";
+import { Form, useLoaderData, useFetcher, } from "react-router-dom";
+import { getTask, updateTask } from "../tasks";
 
 export async function loader({ params }) {
     const task = await getTask(params.taskId);
+    if (!task) {
+      throw new Response("", {
+        status: 404,
+        statusText: "Not Found",
+      });
+    }
     return { task };
+}
+export async function action({ request, params }) {
+  let formData = await request.formData();
+  return updateTask(params.taskId, {
+    checked: formData.get("checked") === "true",
+  });
 }
 
 function Task() {
@@ -52,10 +64,13 @@ function Task() {
   }
   
   function Checked({ task }) {
+    const fetcher = useFetcher();
     let checked = task.checked;
-  
+    if (fetcher.formData) {
+      checked = fetcher.formData.get("checked") === "true";
+    }
     return (
-      <Form method="post">
+      <fetcher.Form method="post">
         <button
           name="checked"
           value={checked ? "false" : "true"}
@@ -64,7 +79,7 @@ function Task() {
         >
           {checked ? "✅" : "🔲"}
         </button>
-      </Form>
+        </fetcher.Form>
     );
   }
 
