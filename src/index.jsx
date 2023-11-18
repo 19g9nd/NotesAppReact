@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import store from "./redux/store";
 import Root, {
   loader as rootLoader,
   action as rootAction,
@@ -14,6 +15,7 @@ import Task, {
 import EditTask, { action as editTaskAction } from "./routes/editTasks";
 import { action as destroyTaskAction } from "./routes/destroy";
 import Index from "./routes";
+import { Provider } from "react-redux";
 
 const container = document.getElementById("root");
 
@@ -60,6 +62,8 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <RouterProvider router={router} />
+	</Provider>
   </React.StrictMode>
 );
