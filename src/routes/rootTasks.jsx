@@ -7,16 +7,16 @@ import {
   useNavigation,
   useSubmit,
 } from "react-router-dom";
-import { getTasks, createTask } from "../tasks";
+import { getTasks, createTask,filterByDone } from "../tasks";
+import { useState } from "react";
 export async function loader({ request }) {
-  console.log("asdasdasdas");
-
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
   const tasks = await getTasks(q);
 
   return { tasks, q };
 }
+
 
 export async function action() {
   const task = await createTask();
@@ -27,7 +27,6 @@ function Root() {
   const { tasks, q } = useLoaderData();
   const navigation = useNavigation();
   const submit = useSubmit();
-
   const searching =
   navigation.location &&
   new URLSearchParams(navigation.location.search).has(
@@ -65,6 +64,14 @@ function Root() {
           <Form method="post">
             <button type="submit">New</button>
           </Form>
+        </div>
+        <div className="filter_by">
+
+        <button>All</button>
+        <button>In progress</button>
+        <button  onClick={filterByDone}>Done</button>
+
+
         </div>
         <nav>
           {tasks.length ? (
