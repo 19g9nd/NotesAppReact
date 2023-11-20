@@ -7,6 +7,11 @@ function Task({ taskData }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
+  const taskData = useSelector((state) => state.tasksReducer[0]);
+
+  useEffect(() => {
+    dispatch(fetchTaskById(taskData.taskId));
+  }, [dispatch, taskData.taskId]);
 
   function handleEdit() {
     const newIsEditMode = !isEditMode;

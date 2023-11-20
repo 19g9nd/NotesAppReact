@@ -7,10 +7,12 @@ import {
   useNavigation,
   useSubmit,
 } from "react-router-dom";
-import { getTasks, createTask, filterByDone } from "../tasks";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import TasksList from "../components/TasksList/TasksList";
 import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
+import { getTasks } from "../tasks";
+import { addTask, fetchTasksFromLocalStorage } from "../redux/slices/tasksSlice";
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
@@ -20,12 +22,13 @@ export async function loader({ request }) {
 }
 
 export async function action() {
-  const task = await createTask();
+  const task = await addTask();
   return redirect(`/tasks/${task.id}/edit`);
 }
 
 function Root() {
-  const { tasks, q } = useLoaderData();
+  // const { tasks, q } = useLoaderData();
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const submit = useSubmit();
   const searching =
@@ -38,12 +41,17 @@ function Root() {
     setShowAddTaskForm(true);
   };
 
+  useEffect(() => {
+    dispatch(fetchTasksFromLocalStorage());
+  }, [dispatch]);
+
+
   return (
     <>
       <div id="sidebar">
         <h1>React tasks</h1>
         <div>
-          <Form id="search-form" role="search">
+          {/* <Form id="search-form" role="search">
             <input
               id="q"
               className={searching ? "loading" : ""}
@@ -61,7 +69,7 @@ function Root() {
             />
             <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
-          </Form>
+          </Form> */}
 
             <button onClick={handleNewButtonClick}>New</button>
           {/* <Form method="post">

@@ -14,7 +14,10 @@ function TasksList() {
   const initialTasks = loadTasksFromLocalStorage();
   const tasks = useSelector((state) => state.tasksReducer) || initialTasks;
 
-  
+  useEffect(() => {
+    // dispatch(updateTaskFromLocalStorage());
+  }, []);
+
   // Function to dispatch an action to update tasks in Redux state from localStorage
   const dispatch = useDispatch();
   const updateTaskFromLocalStorage = () => {

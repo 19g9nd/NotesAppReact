@@ -8,16 +8,17 @@ import Root, {
   action as rootAction,
 } from "./routes/rootTasks";
 import ErrorPage from "./error-page";
-import Task, {
-  loader as taskLoader,
-  action as TaskAction,
-} from "./routes/task";
-import EditTask, { action as editTaskAction } from "./routes/editTasks";
+// import Task, {
+//   loader as taskLoader,
+//   action as TaskAction,
+// } from "./routes/task";
+// import EditTask, { action as editTaskAction } from "./routes/editTasks";
 import { action as destroyTaskAction } from "./routes/destroy";
 import Index from "./routes";
 import { Provider } from "react-redux";
-import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
-import TasksList from "./components/TasksList/TasksList";
+import EditTask from "./routes/editTasks";
+import Task from "./components/TasksList/Task/Task";
+// import Task from "./components/TasksList/Task/Task";
 
 const container = document.getElementById("root");
 
@@ -40,15 +41,15 @@ const router = createBrowserRouter([
           },
           {
             path: "tasks/:taskId",
-            element: <Task />,
-            loader: taskLoader,
-            action: TaskAction,
+             element: <Task />,
+            // loader: taskLoader,
+            // action: TaskAction,
           },
           {
             path: "tasks/:taskId/edit",
-            element: <EditTask />,
-            loader: taskLoader,
-            action: editTaskAction,
+             element: <EditTask />,
+            // loader: taskLoader,
+            // action: editTaskAction,
           },
           {
             path: "tasks/:taskId/destroy",

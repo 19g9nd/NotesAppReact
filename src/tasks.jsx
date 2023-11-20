@@ -14,22 +14,7 @@ export async function getTasks(query) {
     return [];
   }  
 }
-export async function createTask() {
-  await fakeNetwork();
-  let id = Math.random().toString(36).substring(2, 9);
-  let task = { id, createdAt: Date.now(),checked:false };
-  let tasks = await getTasks(); 
-  tasks.unshift(task);
-  await set(tasks);
-  return task;
-}
-export async function filterByDone() {
-  let tasks = await getTasks();
-  const filteredTasks = tasks.filter((task) => task.checked === true);
-  console.log(filteredTasks); 
-  return filteredTasks;
- 
-}
+
 
 export async function getTask(id) {
   await fakeNetwork(`task:${id}`);
@@ -44,15 +29,15 @@ export async function getTask(id) {
 
 }
 
-export async function updateTask(id, updates) {
-  await fakeNetwork();
-  let tasks = await JSON.parse(localStorage.getItem("tasks")) || [];
-  let task = tasks.find(task => task.id === id);
-  if (!task)  throw new Error(`No task found for id: ${id}`);
-  Object.assign(task, updates);
-  await set(tasks);
-  return task;
-}
+// export async function updateTask(id, updates) {
+//   await fakeNetwork();
+//   let tasks = await JSON.parse(localStorage.getItem("tasks")) || [];
+//   let task = tasks.find(task => task.id === id);
+//   if (!task)  throw new Error(`No task found for id: ${id}`);
+//   Object.assign(task, updates);
+//   await set(tasks);
+//   return task;
+// }
 
 export async function deleteTask(id) {
   let tasks = await JSON.parse(localStorage.getItem("tasks")) || [];;
@@ -72,7 +57,7 @@ function set(tasks) {
   return localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// fake a cache so we don't slow down stuff we've already seen
+// fake a cache so wae don't slow down stuff we've already seen
 let fakeCache = {};
 
 async function fakeNetwork(key) {
