@@ -66,7 +66,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
     <RouterProvider router={router} />
-    <AddTaskForm />
 		
 	</Provider>
   </React.StrictMode>

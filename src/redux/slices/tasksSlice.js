@@ -13,11 +13,12 @@ export const tasksSlice = createSlice({
           state.splice(taskIndex, 1);
       },
       updateTask: (state, action) => {
-          const {id, newTitle} = action.payload;
+          const {id, newTitle,newDescription} = action.payload;
 
           const taskIndex = state.findIndex(task => task.id === id);
 
           state[taskIndex].title = newTitle;
+          state[taskIndex].description = newDescription;
       }
   }
 });
