@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { getTasks, createTask,filterByDone } from "../tasks";
 import { useState } from "react";
+import TasksList from "../components/TasksList/TasksList";
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
@@ -69,11 +70,11 @@ function Root() {
 
         <button>All</button>
         <button>In progress</button>
-        <button  onClick={filterByDone}>Done</button>
+        <button>Done</button>
 
 
         </div>
-        <nav>
+        {/* <nav>
           {tasks.length ? (
             <ul>
               {tasks.map((task) => (
@@ -101,7 +102,8 @@ function Root() {
               <i>No tasks</i>
             </p>
           )}
-        </nav>
+        </nav> */}
+        <TasksList />
       </div>
       <div
         id="detail"

@@ -16,6 +16,8 @@ import EditTask, { action as editTaskAction } from "./routes/editTasks";
 import { action as destroyTaskAction } from "./routes/destroy";
 import Index from "./routes";
 import { Provider } from "react-redux";
+import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
+import TasksList from "./components/TasksList/TasksList";
 
 const container = document.getElementById("root");
 
@@ -64,6 +66,8 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
     <RouterProvider router={router} />
+    <AddTaskForm />
+		
 	</Provider>
   </React.StrictMode>
 );
