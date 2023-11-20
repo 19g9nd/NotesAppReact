@@ -22,13 +22,8 @@ function AddTaskForm() {
         setDescription('');
     }
     const saveTaskToLocalStorage = (task) => {
-        // Retrieve existing tasks from localStorage or initialize an empty array
         const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-        // Add the new task to the array
         existingTasks.push(task);
-
-        // Save the updated array back to localStorage
         localStorage.setItem('tasks', JSON.stringify(existingTasks));
     };
     return (

@@ -41,9 +41,9 @@ function Root() {
     setShowAddTaskForm(true);
   };
 
-  useEffect(() => {
-    dispatch(fetchTasksFromLocalStorage());
-  }, [dispatch]);
+
+    // dispatch(fetchTasksFromLocalStorage());
+
 
 
   return (

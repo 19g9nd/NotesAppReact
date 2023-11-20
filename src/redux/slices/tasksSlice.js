@@ -32,7 +32,7 @@ export const fetchTasksFromLocalStorage = createAsyncThunk(
 );
 export const tasksSlice = createSlice({
   name: "tasks",
-  initialState: [],
+  initialState: JSON.parse(localStorage.getItem("tasks")) || [],
   reducers: {
     addTask: (state, action) => {
       console.log(action.payload);

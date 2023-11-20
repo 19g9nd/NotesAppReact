@@ -7,11 +7,16 @@ function Task() {
   const [isEditMode, setIsEditMode] = useState(false);
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
-  //достаю  первую таску  но надо доставать выбранную
-   const taskData = useSelector((state) => state.tasksReducer[0]);
-  useEffect(() => {
-    dispatch(fetchTask(taskData.id));
-  }, [dispatch, taskData.id]);
+  //достаю  первую таску  но надо доставать выбранную fetchTask дает ошибку
+   const tasks = useSelector((state) => state.tasksReducer);
+
+   const taskData = tasks.find(task => task.id === '9088f6b5-031b-48dc-92e3-87d562498e7a');
+
+   console.log('AAAAAAAAAAAAAAAAAAA',taskData);
+
+  // useEffect(() => {
+  //   dispatch(fetchTask(taskData.id));
+  // }, [dispatch, taskData.id]);
 
   function handleEdit() {
     const newIsEditMode = !isEditMode;
@@ -37,6 +42,7 @@ function Task() {
       ) : (
         <>
           <i>{taskData.title}</i>
+          <div></div>
           <i>{taskData.description}</i>
         </>
       )}

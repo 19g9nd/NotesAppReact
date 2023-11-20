@@ -1,18 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
-import { updateTask } from "../../redux/slices/tasksSlice";
+import { fetchTasksFromLocalStorage, updateTask } from "../../redux/slices/tasksSlice";
 
-// Function to load tasks from localStorage
-const loadTasksFromLocalStorage = () => {
-  const localStorageTasks = localStorage.getItem('tasks');
-  return localStorageTasks ? JSON.parse(localStorageTasks) : [];
-};
+
 
 function TasksList() {
-  // Load tasks from localStorage initially
-  const initialTasks = loadTasksFromLocalStorage();
-  const tasks = useSelector((state) => state.tasksReducer) || initialTasks;
+  const tasks = useSelector((state) => state.tasksReducer);
 
   useEffect(() => {
     // dispatch(updateTaskFromLocalStorage());
@@ -21,7 +15,7 @@ function TasksList() {
   // Function to dispatch an action to update tasks in Redux state from localStorage
   const dispatch = useDispatch();
   const updateTaskFromLocalStorage = () => {
-    const localStorageTasks = loadTasksFromLocalStorage();
+    const localStorageTasks = fetchTasksFromLocalStorage();
     dispatch(updateTask(localStorageTasks));
   };
 
