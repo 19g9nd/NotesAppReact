@@ -1,17 +1,17 @@
-import { useDispatch } from "react-redux";
-import { deleteTask, updateTask } from "../../../redux/slices/tasksSlice";
-import { useState, useRef } from "react";
-
-function Task({ taskData }) {
+import { useDispatch, useSelector } from "react-redux";
+import { deleteTask, fetchTask, updateTask } from "../../../redux/slices/tasksSlice";
+import { useState, useRef, useEffect } from "react";
+// { taskData }
+function Task() {
   const dispatch = useDispatch();
   const [isEditMode, setIsEditMode] = useState(false);
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
-  const taskData = useSelector((state) => state.tasksReducer[0]);
-
+  //достаю  первую таску  но надо доставать выбранную
+   const taskData = useSelector((state) => state.tasksReducer[0]);
   useEffect(() => {
-    dispatch(fetchTaskById(taskData.taskId));
-  }, [dispatch, taskData.taskId]);
+    dispatch(fetchTask(taskData.id));
+  }, [dispatch, taskData.id]);
 
   function handleEdit() {
     const newIsEditMode = !isEditMode;
