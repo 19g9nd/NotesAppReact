@@ -7,18 +7,17 @@ import {
   useNavigation,
   useSubmit,
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import TasksList from "../components/TasksList/TasksList";
 import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
-import { getTasks } from "../tasks";
-import { addTask, fetchTasksFromLocalStorage } from "../redux/slices/tasksSlice";
+import {
+  addTask,
+  fetchTasksFromLocalStorage,
+} from "../redux/slices/tasksSlice";
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const tasks = await getTasks(q);
-
-  return { tasks, q };
+  return { q };
 }
 
 export async function action() {
@@ -27,8 +26,8 @@ export async function action() {
 }
 
 function Root() {
-  // const { tasks, q } = useLoaderData();
-  const dispatch = useDispatch();
+  const { q } = useLoaderData();
+
   const navigation = useNavigation();
   const submit = useSubmit();
   const searching =
@@ -41,17 +40,12 @@ function Root() {
     setShowAddTaskForm(true);
   };
 
-
-    // dispatch(fetchTasksFromLocalStorage());
-
-
-
   return (
     <>
       <div id="sidebar">
         <h1>React tasks</h1>
         <div>
-          {/* <Form id="search-form" role="search">
+          <Form id="search-form" role="search">
             <input
               id="q"
               className={searching ? "loading" : ""}
@@ -69,12 +63,12 @@ function Root() {
             />
             <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
-          </Form> */}
+          </Form>
 
-            <button onClick={handleNewButtonClick}>New</button>
+          <button onClick={handleNewButtonClick}>New</button>
           {/* <Form method="post">
             {<button type="submit">New</button> }
-          </Form> чтобы не происходил автоматический вызов edit и таска не добавлялась в локалсторадж */ } 
+          </Form> чтобы не происходил автоматический вызов edit и таска не добавлялась в локалсторадж */}
         </div>
         <div className="filter_by">
           <button>All</button>

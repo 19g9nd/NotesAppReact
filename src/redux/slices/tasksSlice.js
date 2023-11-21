@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { matchSorter } from "match-sorter";
 
 const fakeNetwork = async (taskId) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -19,10 +20,17 @@ export const fetchTask = createAsyncThunk("tasks/fetchTask", async (taskId) => {
 });
 export const fetchTasksFromLocalStorage = createAsyncThunk(
   "tasks/fetchTasksFromLocalStorage",
-  async () => {
+  async (query) => {
     await fakeNetwork();
     try {
       const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+      if (query) {
+        tasks = tasks.filter((task) =>
+          matchSorter([task], query, { keys: ["title", "description"] }).length > 0
+        );
+      }
+
       return tasks;
     } catch (error) {
       console.error("Error parsing tasks:", error);

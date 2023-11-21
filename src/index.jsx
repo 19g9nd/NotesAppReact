@@ -8,10 +8,7 @@ import Root, {
   action as rootAction,
 } from "./routes/rootTasks";
 import ErrorPage from "./error-page";
-// import Task, {
-//   loader as taskLoader,
-//   action as TaskAction,
-// } from "./routes/task";
+
 // import EditTask, { action as editTaskAction } from "./routes/editTasks";
 import { action as destroyTaskAction } from "./routes/destroy";
 import Index from "./routes";
@@ -42,13 +39,11 @@ const router = createBrowserRouter([
           {
             path: "tasks/:taskId",
              element: <Task />,
-            // loader: taskLoader,
-            // action: TaskAction,
+             loader: rootLoader,
           },
           {
             path: "tasks/:taskId/edit",
              element: <EditTask />,
-            // loader: taskLoader,
             // action: editTaskAction,
           },
           {

@@ -1,22 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask, fetchTask, updateTask } from "../../../redux/slices/tasksSlice";
-import { useState, useRef, useEffect } from "react";
+import { deleteTask, updateTask } from "../../../redux/slices/tasksSlice";
+import { useState, useRef } from "react";
 // { taskData }
-function Task() {
+function Task({ taskId }) {
   const dispatch = useDispatch();
   const [isEditMode, setIsEditMode] = useState(false);
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
-  //достаю  первую таску  но надо доставать выбранную fetchTask дает ошибку
-   const tasks = useSelector((state) => state.tasksReducer);
 
-   const taskData = tasks.find(task => task.id === '9088f6b5-031b-48dc-92e3-87d562498e7a');
+   const tasks = useSelector((state) => state.tasksReducer);
+//нажно досать айди нужной задачи
+   const taskData = tasks.find(task => task.id === taskId);
 
    console.log('AAAAAAAAAAAAAAAAAAA',taskData);
-
-  // useEffect(() => {
-  //   dispatch(fetchTask(taskData.id));
-  // }, [dispatch, taskData.id]);
 
   function handleEdit() {
     const newIsEditMode = !isEditMode;
