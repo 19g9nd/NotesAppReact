@@ -7,7 +7,7 @@ import {
 import { useState, useRef } from "react";
 import store from "../../../redux/store";
 import { useLoaderData } from "react-router-dom";
-// { taskData }
+
 export async function loader({ params }) {
   const task = (await store.dispatch(fetchTask(params.taskId))).payload;
 
