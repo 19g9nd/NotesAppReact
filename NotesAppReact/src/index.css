@@ -8,6 +8,8 @@
   --link-color: #eeb004;
    --gradient-start: #c0e4f6; 
   --gradient-end: #f8d7e9;
+  height: 100vh; /* Make body full height */
+  overflow: hidden;
 }
 
 
@@ -21,6 +23,7 @@ html {
 }
 
 body {
+  height: 100vh;
   font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -240,7 +243,7 @@ i {
 #detail {
   flex: 1;
   padding: 2rem 4rem;
-  width: 100%;
+  width: calc(100% - 22rem);
 }
 
 #detail.loading {
@@ -272,9 +275,63 @@ i {
   background: var(--main-bg-color);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0);
 }
+@media (max-width: 768px) {
+  #root {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    flex: 1;
+    border-right: none; 
+  }
+  #sidebar h1 {
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 1rem 2rem;
+    border-top: 1px solid #e3e3e3;
+    order: 0; 
+    justify-content: center;
+    line-height: 1;
+  }
+  
+  #sidebar h1::before {
+    font-family: 'Font Awesome 5 Free'; 
+    margin-right: 0.5rem;
+    position: relative;
+    top: 1px;
+    content: "🎯"; 
+  }
+
+  #filter_by {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem; 
+}
+
+#filter_by button {
+  flex: 1; 
+  padding: 0.5rem;
+  background-color: #3992ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#filter_by button:not(:last-child) {
+  margin-right: 8px;
+}
+  #detail {
+    width: 100%; 
+  }
+}
 
 #sidebar {
-  width: 22rem;
+  flex: 0 0 22rem; 
+ 
   background: linear-gradient(var(--gradient-start), var(--gradient-end));
   border-right: solid 1px #e3e3e3;
   display: flex;
