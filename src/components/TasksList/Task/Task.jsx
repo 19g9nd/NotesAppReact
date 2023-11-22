@@ -1,18 +1,35 @@
-import { useDispatch, useSelector } from "react-redux";
-import { deleteTask, updateTask } from "../../../redux/slices/tasksSlice";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import {
+  deleteTask,
+  fetchTask,
+  updateTask,
+} from "../../../redux/slices/tasksSlice";
 import { useState, useRef } from "react";
+import store from "../../../redux/store";
+import { useLoaderData } from "react-router-dom";
 // { taskData }
-function Task({ taskId }) {
+export async function loader({ params }) {
+  const task = (await store.dispatch(fetchTask(params.taskId))).payload;
+
+  if (!task) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return { MyTask: task };
+}
+function Task() {
   const dispatch = useDispatch();
   const [isEditMode, setIsEditMode] = useState(false);
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
 
-   const tasks = useSelector((state) => state.tasksReducer);
-//нажно досать айди нужной задачи
-   const taskData = tasks.find(task => task.id === taskId);
+  const tasks = useSelector((state) => state.tasksReducer);
 
-   console.log('AAAAAAAAAAAAAAAAAAA',taskData);
+  const { MyTask } = useLoaderData();
+  const taskData = tasks.find((task) => task.id === MyTask.id);
+  console.log("AAAAAAAAAAAAAAAAAAA", taskData);
 
   function handleEdit() {
     const newIsEditMode = !isEditMode;
@@ -21,19 +38,29 @@ function Task({ taskId }) {
 
     if (newIsEditMode) return;
 
-    dispatch(updateTask({
-      newTitle: titleInputRef.current.value,
-      newDescription: descriptionInputRef.current.value,
-      id: taskData.id
-    }));
+    dispatch(
+      updateTask({
+        newTitle: titleInputRef.current.value,
+        newDescription: descriptionInputRef.current.value,
+        id: taskData.id,
+      })
+    );
   }
 
   return (
     <div>
       {isEditMode ? (
         <>
-          <input type="text" defaultValue={taskData.title} ref={titleInputRef} />
-          <input type="text" defaultValue={taskData.description} ref={descriptionInputRef} />
+          <input
+            type="text"
+            defaultValue={taskData.title}
+            ref={titleInputRef}
+          />
+          <input
+            type="text"
+            defaultValue={taskData.description}
+            ref={descriptionInputRef}
+          />
         </>
       ) : (
         <>
@@ -42,7 +69,7 @@ function Task({ taskId }) {
           <i>{taskData.description}</i>
         </>
       )}
-      <button onClick={handleEdit}>{isEditMode ? 'Save' : 'Edit'}</button>
+      <button onClick={handleEdit}>{isEditMode ? "Save" : "Edit"}</button>
       <button onClick={() => dispatch(deleteTask(taskData.id))}>Delete</button>
     </div>
   );

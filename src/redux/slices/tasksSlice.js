@@ -6,7 +6,6 @@ const fakeNetwork = async (taskId) => {
   console.log(`Fetching task with ID: ${taskId}`);
 };
 
-
 export const fetchTask = createAsyncThunk("tasks/fetchTask", async (taskId) => {
   await fakeNetwork(`task:${taskId}`);
   try {
@@ -26,8 +25,10 @@ export const fetchTasksFromLocalStorage = createAsyncThunk(
       const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
       if (query) {
-        tasks = tasks.filter((task) =>
-          matchSorter([task], query, { keys: ["title", "description"] }).length > 0
+        tasks = tasks.filter(
+          (task) =>
+            matchSorter([task], query, { keys: ["title", "description"] })
+              .length > 0
         );
       }
 
@@ -47,9 +48,14 @@ export const tasksSlice = createSlice({
       state.push(action.payload);
     },
     deleteTask: (state, action) => {
-      const taskIndex = state.findIndex((task) => task.id === action.payload);
+      const taskId = action.payload;
 
-      state.splice(taskIndex, 1);
+      // Create a new array without the deleted task
+      const updatedTasks = state.filter((task) => task.id !== taskId);
+
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      // Update the state with the new array
+      return updatedTasks;
     },
     updateTask: (state, action) => {
       console.log(action.payload);

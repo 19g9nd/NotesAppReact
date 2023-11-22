@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import Task from "./Task/Task";
 function TasksList() {
   const tasks = useSelector((state) => state.tasksReducer);
 
@@ -21,6 +22,7 @@ function TasksList() {
                   <i>No Title</i>
                 )}{" "}
                 {task.checked && <span>✅</span>}
+            
               </NavLink>
             </li>
           ))}

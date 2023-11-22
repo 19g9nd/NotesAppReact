@@ -14,7 +14,7 @@ import { action as destroyTaskAction } from "./routes/destroy";
 import Index from "./routes";
 import { Provider } from "react-redux";
 import EditTask from "./routes/editTasks";
-import Task from "./components/TasksList/Task/Task";
+import Task,  {loader as taskLoader}from "./components/TasksList/Task/Task";
 // import Task from "./components/TasksList/Task/Task";
 
 const container = document.getElementById("root");
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
           {
             path: "tasks/:taskId",
              element: <Task />,
-             loader: rootLoader,
+             loader: taskLoader,
           },
           {
             path: "tasks/:taskId/edit",
